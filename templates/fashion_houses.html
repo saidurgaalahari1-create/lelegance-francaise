@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Les Grandes Maisons | L'Élégance Française</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .houses-hero {
+            min-height: 75vh;
+            padding: 100px 8%;
+            display: flex;
+            align-items: center;
+            color: #fffaf2;
+            background:
+                linear-gradient(90deg, rgba(38, 24, 19, .86), rgba(38, 24, 19, .20)),
+                url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=2000&q=85")
+                center 40% / cover;
+        }
+
+        .houses-hero-content {
+            max-width: 760px;
+        }
+
+        .houses-eyebrow {
+            color: #e4c79b;
+            letter-spacing: .28em;
+            font-size: .75rem;
+            text-transform: uppercase;
+        }
+
+        .houses-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.7rem, 8vw, 7rem);
+            font-weight: 400;
+            line-height: .95;
+            margin: 25px 0;
+        }
+
+        .houses-hero p {
+            max-width: 560px;
+            line-height: 1.9;
+        }
+
+        .houses-intro {
+            max-width: 850px;
+            margin: auto;
+            padding: 100px 24px 65px;
+            text-align: center;
+        }
+
+        .houses-intro h2,
+        .house-copy h2,
+        .craftsmanship h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.05;
+        }
+
+        .houses-intro p {
+            line-height: 2;
+            margin-top: 22px;
+        }
+
+        .houses-grid {
+            max-width: 1250px;
+            margin: auto;
+            padding: 20px 6% 100px;
+        }
+
+        .house-card {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            align-items: center;
+            gap: 7%;
+            margin: 0 0 110px;
+        }
+
+        .house-card:nth-child(even) .house-image {
+            order: 2;
+        }
+
+        .house-image {
+            position: relative;
+            overflow: hidden;
+            min-height: 480px;
+            background: #e7ded2;
+        }
+
+        .house-image img {
+            width: 100%;
+            height: 480px;
+            display: block;
+            object-fit: cover;
+            transition: transform .9s ease;
+        }
+
+        .house-card:hover .house-image img {
+            transform: scale(1.045);
+        }
+
+        .house-copy {
+            padding: 25px 0;
+        }
+
+        .house-number {
+            color: #ad8957;
+            font-size: .75rem;
+            letter-spacing: .25em;
+        }
+
+        .house-copy h2 {
+            margin: 17px 0;
+        }
+
+        .house-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #a17a45;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .house-copy p {
+            line-height: 1.95;
+            font-size: .94rem;
+            margin-bottom: 16px;
+        }
+
+        .house-detail {
+            border-top: 1px solid rgba(173, 137, 87, .45);
+            padding-top: 17px;
+            margin-top: 25px;
+        }
+
+        .house-detail strong {
+            display: block;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .17em;
+            margin-bottom: 8px;
+            color: #a17a45;
+        }
+
+        .craftsmanship {
+            padding: 95px 8%;
+            background: #38271f;
+            color: #f8f0e4;
+            text-align: center;
+        }
+
+        .craftsmanship p {
+            max-width: 760px;
+            line-height: 2;
+            margin: 25px auto;
+        }
+
+        .craftsmanship .houses-eyebrow {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .houses-ending {
+            text-align: center;
+            padding: 100px 24px;
+        }
+
+        .houses-ending h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+        }
+
+        .houses-ending p {
+            max-width: 680px;
+            line-height: 1.9;
+            margin: 22px auto 30px;
+        }
+
+        .houses-button {
+            display: inline-block;
+            border: 1px solid #ad8957;
+            padding: 14px 28px;
+            text-decoration: none;
+            color: inherit;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            font-size: .75rem;
+            transition: background .3s, color .3s;
+        }
+
+        .houses-button:hover {
+            background: #ad8957;
+            color: white;
+        }
+
+        .house-reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity .85s ease, transform .85s ease;
+        }
+
+        .house-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 800px) {
+            .houses-hero {
+                min-height: 65vh;
+                padding: 85px 7%;
+            }
+
+            .houses-intro {
+                padding-top: 70px;
+            }
+
+            .house-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-bottom: 75px;
+            }
+
+            .house-card:nth-child(even) .house-image {
+                order: 0;
+            }
+
+            .house-image,
+            .house-image img {
+                height: 350px;
+                min-height: 350px;
+            }
+
+            .house-copy {
+                padding: 10px 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .house-reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .house-image img {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="houses-hero">
+    <div class="houses-hero-content house-reveal">
+        <span class="houses-eyebrow"
+              data-fr="L'art du luxe français"
+              data-en="The art of French luxury">
+            L'art du luxe français
+        </span>
+
+        <h1 data-fr="Les Grandes<br>Maisons"
+            data-en="The Great<br>Fashion Houses">
+            Les Grandes<br>Maisons
+        </h1>
+
+        <p data-fr="Découvrez les maisons légendaires qui ont transformé la créativité française en un symbole mondial d'élégance, d'artisanat et d'innovation."
+           data-en="Discover the legendary fashion houses that transformed French creativity into a global symbol of elegance, craftsmanship and innovation.">
+            Découvrez les maisons légendaires qui ont transformé la créativité française en un symbole mondial d'élégance, d'artisanat et d'innovation.
+        </p>
+    </div>
+</header>
+
+<main>
+
+    <section class="houses-intro house-reveal">
+        <span class="houses-eyebrow"
+              data-fr="L'héritage des créateurs"
+              data-en="The legacy of designers">
+            L'héritage des créateurs
+        </span>
+
+        <h2 data-fr="Cinq maisons, cinq visions du luxe"
+            data-en="Five houses, five visions of luxury">
+            Cinq maisons, cinq visions du luxe
+        </h2>
+
+        <p data-fr="Chaque grande maison possède sa propre histoire, son identité visuelle et son savoir-faire. Ensemble, elles illustrent la diversité de la mode française, entre tradition, audace et recherche créative."
+           data-en="Every great fashion house has its own history, visual identity and craftsmanship. Together, they illustrate the diversity of French fashion through tradition, boldness and creative experimentation.">
+            Chaque grande maison possède sa propre histoire, son identité visuelle et son savoir-faire. Ensemble, elles illustrent la diversité de la mode française, entre tradition, audace et recherche créative.
+        </p>
+    </section>
+
+    <section class="houses-grid">
+
+        <!-- CHANEL -->
+        <article class="house-card house-reveal">
+            <div class="house-image">
+                <img
+                    src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1100&q=85"
+                    alt="Accessoires de mode élégants">
+            </div>
+
+            <div class="house-copy">
+                <span class="house-number">01 / MAISON</span>
+
+                <h2>CHANEL</h2>
+
+                <div class="house-tagline"
+                     data-fr="L'élégance en toute liberté"
+                     data-en="Elegance with freedom">
+                    L'élégance en toute liberté
+                </div>
+
+                <p data-fr="Fondée par Gabrielle « Coco » Chanel, la maison Chanel a profondément transformé la mode féminine. Elle a contribué à populariser des vêtements plus simples et confortables, tout en conservant une allure raffinée."
+                   data-en="Founded by Gabrielle 'Coco' Chanel, the house of Chanel profoundly transformed women's fashion. It helped popularise simpler, more comfortable clothing while preserving a refined appearance.">
+                    Fondée par Gabrielle « Coco » Chanel, la maison Chanel a profondément transformé la mode féminine. Elle a contribué à populariser des vêtements plus simples et confortables, tout en conservant une allure raffinée.
+                </p>
+
+                <p data-fr="Son héritage comprend le tailleur en tweed, la petite robe noire et un style devenu synonyme d'élégance intemporelle."
+                   data-en="Its legacy includes the tweed suit, the little black dress and a style that has become synonymous with timeless elegance.">
+                    Son héritage comprend le tailleur en tweed, la petite robe noire et un style devenu synonyme d'élégance intemporelle.
+                </p>
+
+                <div class="house-detail">
+                    <strong data-fr="Signature" data-en="Signature">Signature</strong>
+                    <p data-fr="Tweed, simplicité et élégance intemporelle."
+                       data-en="Tweed, simplicity and timeless elegance.">
+                        Tweed, simplicité et élégance intemporelle.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- DIOR -->
+        <article class="house-card house-reveal">
+            <div class="house-image">
+                <img
+                    src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1100&q=85"
+                    alt="Silhouette de haute couture">
+            </div>
+
+            <div class="house-copy">
+                <span class="house-number">02 / MAISON</span>
+
+                <h2>DIOR</h2>
+
+                <div class="house-tagline"
+                     data-fr="La poésie des silhouettes"
+                     data-en="The poetry of silhouettes">
+                    La poésie des silhouettes
+                </div>
+
+                <p data-fr="Christian Dior fonde sa maison en 1946. En 1947, sa collection New Look marque un tournant dans la mode d'après-guerre grâce à ses tailles marquées, ses épaules douces et ses jupes amples."
+                   data-en="Christian Dior founded his fashion house in 1946. In 1947, his New Look collection marked a turning point in post-war fashion with defined waists, soft shoulders and full skirts.">
+                    Christian Dior fonde sa maison en 1946. En 1947, sa collection New Look marque un tournant dans la mode d'après-guerre grâce à ses tailles marquées, ses épaules douces et ses jupes amples.
+                </p>
+
+                <p data-fr="La maison poursuit cet héritage en associant savoir-faire couture, créativité artistique et nouvelles interprétations du luxe."
+                   data-en="The house continues this legacy by combining couture craftsmanship, artistic creativity and new interpretations of luxury.">
+                    La maison poursuit cet héritage en associant savoir-faire couture, créativité artistique et nouvelles interprétations du luxe.
+                </p>
+
+                <div class="house-detail">
+                    <strong data-fr="Signature" data-en="Signature">Signature</strong>
+                    <p data-fr="Silhouettes sculpturales et romantisme."
+                       data-en="Sculptural silhouettes and romanticism.">
+                        Silhouettes sculpturales et romantisme.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- LOUIS VUITTON -->
+        <article class="house-card house-reveal">
+            <div class="house-image">
+                <img
+                    src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1100&q=85"
+                    alt="Maroquinerie et accessoires de luxe">
+            </div>
+
+            <div class="house-copy">
+                <span class="house-number">03 / MAISON</span>
+
+                <h2>LOUIS VUITTON</h2>
+
+                <div class="house-tagline"
+                     data-fr="L'esprit du voyage"
+                     data-en="The spirit of travel">
+                    L'esprit du voyage
+                </div>
+
+                <p data-fr="Fondée à Paris en 1854, la maison Louis Vuitton est d'abord connue pour ses malles et son savoir-faire lié au voyage. Elle développe ensuite un univers de maroquinerie, de prêt-à-porter et d'accessoires."
+                   data-en="Founded in Paris in 1854, Louis Vuitton first became known for its trunks and travel craftsmanship. It later expanded into leather goods, ready-to-wear fashion and accessories.">
+                    Fondée à Paris en 1854, la maison Louis Vuitton est d'abord connue pour ses malles et son savoir-faire lié au voyage. Elle développe ensuite un univers de maroquinerie, de prêt-à-porter et d'accessoires.
+                </p>
+
+                <p data-fr="La maison associe son héritage artisanal à des collaborations créatives et à une esthétique contemporaine."
+                   data-en="The house combines its craftsmanship heritage with creative collaborations and a contemporary aesthetic.">
+                    La maison associe son héritage artisanal à des collaborations créatives et à une esthétique contemporaine.
+                </p>
+
+                <div class="house-detail">
+                    <strong data-fr="Signature" data-en="Signature</strong>
+                    <p data-fr="Malles, monogrammes et esprit du voyage."
+                       data-en="Trunks, monograms and the spirit of travel.">
+                        Malles, monogrammes et esprit du voyage.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- YVES SAINT LAURENT -->
+        <article class="house-card house-reveal">
+            <div class="house-image">
+                <img
+                    src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1100&q=85"
+                    alt="Mode contemporaine et silhouettes élégantes">
+            </div>
+
+            <div class="house-copy">
+                <span class="house-number">04 / MAISON</span>
+
+                <h2>YVES SAINT LAURENT</h2>
+
+                <div class="house-tagline"
+                     data-fr="L'audace de réinventer"
+                     data-en="The courage to reinvent">
+                    L'audace de réinventer
+                </div>
+
+                <p data-fr="Yves Saint Laurent fonde sa maison en 1961. Il contribue à moderniser la garde-robe féminine en empruntant des codes au vestiaire masculin et en remettant en question les conventions."
+                   data-en="Yves Saint Laurent founded his fashion house in 1961. He helped modernise women's wardrobes by adapting elements of menswear and challenging established conventions.">
+                    Yves Saint Laurent fonde sa maison en 1961. Il contribue à moderniser la garde-robe féminine en empruntant des codes au vestiaire masculin et en remettant en question les conventions.
+                </p>
+
+                <p data-fr="Son smoking pour femmes, présenté en 1966, devient une création emblématique de la mode moderne."
+                   data-en="His women's tuxedo, introduced in 1966, became an iconic creation in modern fashion.">
+                    Son smoking pour femmes, présenté en 1966, devient une création emblématique de la mode moderne.
+                </p>
+
+                <div class="house-detail">
+                    <strong data-fr="Signature" data-en="Signature</strong>
+                    <p data-fr="Tailoring, contrastes et esprit avant-gardiste."
+                       data-en="Tailoring, contrasts and an avant-garde spirit.">
+                        Tailoring, contrastes et esprit avant-gardiste.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- HERMES -->
+        <article class="house-card house-reveal">
+            <div class="house-image">
+                <img
+                    src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=1100&q=85"
+                    alt="Accessoires de luxe et détails artisanaux">
+            </div>
+
+            <div class="house-copy">
+                <span class="house-number">05 / MAISON</span>
+
+                <h2>HERMÈS</h2>
+
+                <div class="house-tagline"
+                     data-fr="L'excellence du savoir-faire"
+                     data-en="The excellence of craftsmanship">
+                    L'excellence du savoir-faire
+                </div>
+
+                <p data-fr="Créée à Paris en 1837 par Thierry Hermès, la maison se spécialise d'abord dans la sellerie et les équipements équestres. Son savoir-faire évolue ensuite vers la maroquinerie, la soie, les accessoires et la mode."
+                   data-en="Founded in Paris in 1837 by Thierry Hermès, the house initially specialised in saddlery and equestrian equipment. Its craftsmanship later expanded into leather goods, silk, accessories and fashion.">
+                    Créée à Paris en 1837 par Thierry Hermès, la maison se spécialise d'abord dans la sellerie et les équipements équestres. Son savoir-faire évolue ensuite vers la maroquinerie, la soie, les accessoires et la mode.
+                </p>
+
+                <p data-fr="Hermès est reconnu pour l'importance accordée aux matières, aux détails et au travail artisanal."
+                   data-en="Hermès is known for its attention to materials, details and traditional craftsmanship.">
+                    Hermès est reconnu pour l'importance accordée aux matières, aux détails et au travail artisanal.
+                </p>
+
+                <div class="house-detail">
+                    <strong data-fr="Signature" data-en="Signature</strong>
+                    <p data-fr="Soie, cuir et excellence artisanale."
+                       data-en="Silk, leather and exceptional craftsmanship.">
+                        Soie, cuir et excellence artisanale.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <section class="craftsmanship house-reveal">
+        <span class="houses-eyebrow"
+              data-fr="Au-delà du vêtement"
+              data-en="Beyond clothing">
+            Au-delà du vêtement
+        </span>
+
+        <h2 data-fr="Le luxe est un savoir-faire"
+            data-en="Luxury is craftsmanship">
+            Le luxe est un savoir-faire
+        </h2>
+
+        <p data-fr="La mode française ne repose pas uniquement sur des créations prestigieuses. Elle valorise aussi la précision des artisans, la qualité des matériaux, l'imagination des créateurs et la transmission des techniques. Cet héritage continue d'inspirer la mode contemporaine."
+           data-en="French fashion is built on more than prestigious designs. It also celebrates the precision of artisans, the quality of materials, designers' imagination and the transmission of techniques. This heritage continues to inspire contemporary fashion.">
+            La mode française ne repose pas uniquement sur des créations prestigieuses. Elle valorise aussi la précision des artisans, la qualité des matériaux, l'imagination des créateurs et la transmission des techniques. Cet héritage continue d'inspirer la mode contemporaine.
+        </p>
+    </section>
+
+    <section class="houses-ending house-reveal">
+        <span class="houses-eyebrow"
+              data-fr="Le spectacle continue"
+              data-en="The spectacle continues">
+            Le spectacle continue
+        </span>
+
+        <h2 data-fr="Paris, capitale de la mode"
+            data-en="Paris, fashion capital">
+            Paris, capitale de la mode
+        </h2>
+
+        <p data-fr="Découvrez les défilés, les collections et les coulisses de l'un des événements les plus attendus du calendrier international de la mode."
+           data-en="Discover the runway shows, collections and behind-the-scenes stories of one of the most anticipated events in the international fashion calendar.">
+            Découvrez les défilés, les collections et les coulisses de l'un des événements les plus attendus du calendrier international de la mode.
+        </p>
+
+        <a class="houses-button"
+           href="{{ url_for('paris_fashion_week') }}"
+           data-fr="Découvrir la Fashion Week"
+           data-en="Discover Fashion Week">
+            Découvrir la Fashion Week
+        </a>
+    </section>
+
+</main>
+
+<script>
+    // Elegant scroll-reveal animations
+    const houseObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                houseObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12
+    });
+
+    document.querySelectorAll('.house-reveal').forEach((element) => {
+        houseObserver.observe(element);
+    });
+</script>
+
+</body>
+</html>
+

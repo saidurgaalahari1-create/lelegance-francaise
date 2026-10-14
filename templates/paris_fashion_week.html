@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>La Fashion Week de Paris | L'Élégance Française</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .pfw-hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 8%;
+            color: #fffaf2;
+            background:
+                linear-gradient(90deg, rgba(32, 21, 17, .85), rgba(32, 21, 17, .12)),
+                url("https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2000&q=85")
+                center 35% / cover;
+        }
+
+        .pfw-hero-content {
+            max-width: 780px;
+        }
+
+        .pfw-eyebrow {
+            color: #e3c69a;
+            font-size: .75rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+        }
+
+        .pfw-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 9vw, 7.5rem);
+            font-weight: 400;
+            line-height: .9;
+            margin: 28px 0;
+        }
+
+        .pfw-hero p {
+            max-width: 550px;
+            line-height: 1.9;
+        }
+
+        .pfw-intro {
+            max-width: 900px;
+            margin: auto;
+            padding: 110px 24px 80px;
+            text-align: center;
+        }
+
+        .pfw-intro h2,
+        .pfw-section-heading,
+        .pfw-closing h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(2.5rem, 5vw, 4.3rem);
+            line-height: 1.08;
+        }
+
+        .pfw-intro p {
+            max-width: 750px;
+            margin: 25px auto 0;
+            line-height: 2;
+        }
+
+        .pfw-image-story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 580px;
+            background: #eee5d9;
+        }
+
+        .pfw-story-image {
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .pfw-story-image img {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 1s ease;
+        }
+
+        .pfw-image-story:hover img {
+            transform: scale(1.035);
+        }
+
+        .pfw-story-copy {
+            padding: 70px clamp(30px, 7vw, 100px);
+            align-self: center;
+        }
+
+        .pfw-story-copy h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.05;
+            margin: 20px 0;
+        }
+
+        .pfw-story-copy p {
+            line-height: 1.95;
+            margin-bottom: 18px;
+        }
+
+        .pfw-timeline-section {
+            padding: 100px 8%;
+        }
+
+        .pfw-section-heading {
+            text-align: center;
+            margin: 15px auto 60px;
+            max-width: 800px;
+        }
+
+        .pfw-timeline {
+            max-width: 950px;
+            margin: auto;
+            position: relative;
+        }
+
+        .pfw-timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            width: 1px;
+            background: #b99460;
+        }
+
+        .pfw-step {
+            position: relative;
+            padding: 0 0 55px 75px;
+        }
+
+        .pfw-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .pfw-step::before {
+            content: "";
+            position: absolute;
+            left: 13px;
+            top: 7px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #b99460;
+            box-shadow: 0 0 0 6px #f7f1e8;
+        }
+
+        .pfw-step-number {
+            color: #a17a45;
+            font-size: .75rem;
+            letter-spacing: .2em;
+        }
+
+        .pfw-step h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            font-weight: 400;
+            margin: 8px 0 12px;
+        }
+
+        .pfw-step p {
+            max-width: 700px;
+            line-height: 1.9;
+        }
+
+        .pfw-couture {
+            background: #38271f;
+            color: #f8f0e4;
+            padding: 100px 8%;
+        }
+
+        .pfw-couture-grid {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .pfw-couture img {
+            width: 100%;
+            height: 560px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .pfw-couture h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.05;
+            margin: 20px 0;
+        }
+
+        .pfw-couture p {
+            line-height: 2;
+            margin-bottom: 18px;
+        }
+
+        .pfw-couture .pfw-eyebrow {
+            display: block;
+        }
+
+        .pfw-gallery {
+            padding: 100px 6%;
+        }
+
+        .pfw-gallery-grid {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr 1fr;
+            gap: 18px;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .pfw-gallery-item {
+            height: 390px;
+            overflow: hidden;
+            background: #e7ded2;
+        }
+
+        .pfw-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .8s ease;
+        }
+
+        .pfw-gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .pfw-gallery-caption {
+            text-align: center;
+            margin: 35px auto 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.7rem;
+            font-style: italic;
+        }
+
+        .pfw-closing {
+            text-align: center;
+            padding: 100px 24px;
+        }
+
+        .pfw-closing p {
+            max-width: 700px;
+            margin: 25px auto 30px;
+            line-height: 1.9;
+        }
+
+        .pfw-button {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid #ad8957;
+            color: inherit;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            font-size: .75rem;
+            transition: background .3s, color .3s;
+        }
+
+        .pfw-button:hover {
+            background: #ad8957;
+            color: white;
+        }
+
+        .pfw-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .85s ease, transform .85s ease;
+        }
+
+        .pfw-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 800px) {
+            .pfw-hero {
+                min-height: 70vh;
+                padding: 85px 7%;
+            }
+
+            .pfw-intro {
+                padding-top: 75px;
+            }
+
+            .pfw-image-story,
+            .pfw-couture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pfw-story-image,
+            .pfw-story-image img {
+                min-height: 350px;
+                height: 350px;
+            }
+
+            .pfw-story-copy {
+                padding: 55px 8%;
+            }
+
+            .pfw-couture-grid {
+                gap: 35px;
+            }
+
+            .pfw-couture img {
+                height: 400px;
+            }
+
+            .pfw-gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .pfw-gallery-item {
+                height: 280px;
+            }
+
+            .pfw-gallery-item:last-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pfw-gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pfw-gallery-item,
+            .pfw-gallery-item:last-child {
+                height: 320px;
+                grid-column: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pfw-reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .pfw-gallery-item img,
+            .pfw-story-image img {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="pfw-hero">
+    <div class="pfw-hero-content pfw-reveal">
+        <span class="pfw-eyebrow"
+              data-fr="Là où la mode prend vie"
+              data-en="Where fashion comes alive">
+            Là où la mode prend vie
+        </span>
+
+        <h1 data-fr="Paris<br>Fashion Week"
+            data-en="Paris<br>Fashion Week">
+            Paris<br>Fashion Week
+        </h1>
+
+        <p data-fr="Un rendez-vous international où les créateurs présentent leurs visions, où les silhouettes racontent des histoires et où Paris célèbre la créativité."
+           data-en="An international event where designers present their visions, silhouettes tell stories and Paris celebrates creativity.">
+            Un rendez-vous international où les créateurs présentent leurs visions, où les silhouettes racontent des histoires et où Paris célèbre la créativité.
+        </p>
+    </div>
+</header>
+
+<main>
+
+    <section class="pfw-intro pfw-reveal">
+        <span class="pfw-eyebrow"
+              data-fr="Le cœur de la création"
+              data-en="The heart of creativity">
+            Le cœur de la création
+        </span>
+
+        <h2 data-fr="Une scène mondiale, un esprit parisien"
+            data-en="A global stage, a Parisian spirit">
+            Une scène mondiale, un esprit parisien
+        </h2>
+
+        <p data-fr="La Fashion Week de Paris est un événement majeur du calendrier international de la mode. Les maisons et les créateurs y présentent leurs collections, attirant professionnels, journalistes, acheteurs et passionnés venus du monde entier."
+           data-en="Paris Fashion Week is a major event in the international fashion calendar. Fashion houses and designers present their collections, attracting industry professionals, journalists, buyers and enthusiasts from around the world.">
+            La Fashion Week de Paris est un événement majeur du calendrier international de la mode. Les maisons et les créateurs y présentent leurs collections, attirant professionnels, journalistes, acheteurs et passionnés venus du monde entier.
+        </p>
+    </section>
+
+    <section class="pfw-image-story pfw-reveal">
+        <div class="pfw-story-image">
+            <img
+                src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85"
+                alt="Silhouette de mode sur un podium">
+        </div>
+
+        <div class="pfw-story-copy">
+            <span class="pfw-eyebrow"
+                  data-fr="Bien plus qu'un défilé"
+                  data-en="More than a runway show">
+                Bien plus qu'un défilé
+            </span>
+
+            <h2 data-fr="L'art de raconter une histoire par le vêtement"
+                data-en="The art of telling stories through clothing">
+                L'art de raconter une histoire par le vêtement
+            </h2>
+
+            <p data-fr="Un défilé est une présentation artistique. La musique, l'éclairage, le choix des mannequins et la mise en scène créent un univers qui donne vie à la collection."
+               data-en="A runway show is an artistic presentation. Music, lighting, model selection and staging create a world that brings a collection to life.">
+                Un défilé est une présentation artistique. La musique, l'éclairage, le choix des mannequins et la mise en scène créent un univers qui donne vie à la collection.
+            </p>
+
+            <p data-fr="Chaque détail contribue à transmettre le message du créateur et à présenter sa vision de la mode."
+               data-en="Every detail helps communicate the designer's message and present their vision of fashion.">
+                Chaque détail contribue à transmettre le message du créateur et à présenter sa vision de la mode.
+            </p>
+        </div>
+    </section>
+
+    <section class="pfw-timeline-section">
+        <span class="pfw-eyebrow"
+              data-fr="Dans les coulisses"
+              data-en="Behind the scenes">
+            Dans les coulisses
+        </span>
+
+        <h2 class="pfw-section-heading pfw-reveal"
+            data-fr="De l'idée au podium"
+            data-en="From idea to runway">
+            De l'idée au podium
+        </h2>
+
+        <div class="pfw-timeline">
+
+            <article class="pfw-step pfw-reveal">
+                <span class="pfw-step-number">ÉTAPE 01</span>
+
+                <h3 data-fr="L'inspiration"
+                    data-en="Inspiration">
+                    L'inspiration
+                </h3>
+
+                <p data-fr="Tout commence par une idée. Le créateur explore des références artistiques, culturelles ou historiques pour définir le thème et l'identité de sa collection."
+                   data-en="Everything begins with an idea. The designer explores artistic, cultural or historical references to define the theme and identity of the collection.">
+                    Tout commence par une idée. Le créateur explore des références artistiques, culturelles ou historiques pour définir le thème et l'identité de sa collection.
+                </p>
+            </article>
+
+            <article class="pfw-step pfw-reveal">
+                <span class="pfw-step-number">ÉTAPE 02</span>
+
+                <h3 data-fr="La création"
+                    data-en="Design">
+                    La création
+                </h3>
+
+                <p data-fr="Les croquis deviennent des vêtements grâce au choix des tissus, à la coupe, aux essayages et au travail des équipes de création et des ateliers."
+                   data-en="Sketches become garments through fabric selection, cutting, fittings and the work of design teams and specialist ateliers.">
+                    Les croquis deviennent des vêtements grâce au choix des tissus, à la coupe, aux essayages et au travail des équipes de création et des ateliers.
+                </p>
+            </article>
+
+            <article class="pfw-step pfw-reveal">
+                <span class="pfw-step-number">ÉTAPE 03</span>
+
+                <h3 data-fr="La mise en scène"
+                    data-en="Staging">
+                    La mise en scène
+                </h3>
+
+                <p data-fr="Les équipes préparent le lieu, la musique, l'éclairage et l'ordre de passage afin de créer une présentation cohérente avec l'univers de la collection."
+                   data-en="Teams prepare the venue, music, lighting and running order to create a presentation that matches the collection's creative vision.">
+                    Les équipes préparent le lieu, la musique, l'éclairage et l'ordre de passage afin de créer une présentation cohérente avec l'univers de la collection.
+                </p>
+            </article>
+
+            <article class="pfw-step pfw-reveal">
+                <span class="pfw-step-number">ÉTAPE 04</span>
+
+                <h3 data-fr="Le défilé"
+                    data-en="The runway show">
+                    Le défilé
+                </h3>
+
+                <p data-fr="Les créations sont présentées au public et aux professionnels. Photographes, journalistes et acheteurs découvrent les silhouettes et les nouvelles directions créatives."
+                   data-en="The designs are presented to audiences and industry professionals. Photographers, journalists and buyers discover the silhouettes and new creative directions.">
+                    Les créations sont présentées au public et aux professionnels. Photographes, journalistes et acheteurs découvrent les silhouettes et les nouvelles directions créatives.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="pfw-couture pfw-reveal">
+        <div class="pfw-couture-grid">
+
+            <div>
+                <span class="pfw-eyebrow"
+                      data-fr="Deux univers complémentaires"
+                      data-en="Two complementary worlds">
+                    Deux univers complémentaires
+                </span>
+
+                <h2 data-fr="Haute couture et prêt-à-porter"
+                    data-en="Haute couture and ready-to-wear">
+                    Haute couture et prêt-à-porter
+                </h2>
+
+                <p data-fr="La haute couture française désigne un univers très spécialisé de créations sur mesure, réalisées avec un savoir-faire exceptionnel. En France, l'appellation est encadrée par des critères spécifiques."
+                   data-en="French haute couture refers to a highly specialised world of made-to-measure creations produced with exceptional craftsmanship. In France, the designation is governed by specific criteria.">
+                    La haute couture française désigne un univers très spécialisé de créations sur mesure, réalisées avec un savoir-faire exceptionnel. En France, l'appellation est encadrée par des critères spécifiques.
+                </p>
+
+                <p data-fr="Le prêt-à-porter propose des collections conçues dans des tailles standardisées. Il permet aux maisons de présenter leurs idées créatives dans des collections destinées à être commercialisées."
+                   data-en="Ready-to-wear consists of collections designed in standardised sizes. It allows fashion houses to present their creative ideas through collections intended for sale.">
+                    Le prêt-à-porter propose des collections conçues dans des tailles standardisées. Il permet aux maisons de présenter leurs idées créatives dans des collections destinées à être commercialisées.
+                </p>
+
+                <p data-fr="Ces deux univers contribuent au rayonnement international de la mode parisienne."
+                   data-en="Both worlds contribute to the international influence of Parisian fashion.">
+                    Ces deux univers contribuent au rayonnement international de la mode parisienne.
+                </p>
+            </div>
+
+            <img
+                src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=1100&q=85"
+                alt="Détails d'une tenue de mode">
+        </div>
+    </section>
+
+    <section class="pfw-gallery">
+        <span class="pfw-eyebrow"
+              data-fr="L'esthétique parisienne"
+              data-en="Parisian aesthetics">
+            L'esthétique parisienne
+        </span>
+
+        <h2 class="pfw-section-heading pfw-reveal"
+            data-fr="La mode en images"
+            data-en="Fashion in pictures">
+            La mode en images
+        </h2>
+
+        <div class="pfw-gallery-grid">
+            <div class="pfw-gallery-item pfw-reveal">
+                <img
+                    src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=900&q=85"
+                    alt="Style et création de mode">
+            </div>
+
+            <div class="pfw-gallery-item pfw-reveal">
+                <img
+                    src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85"
+                    alt="Mode urbaine contemporaine">
+            </div>
+
+            <div class="pfw-gallery-item pfw-reveal">
+                <img
+                    src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=900&q=85"
+                    alt="Silhouette élégante">
+            </div>
+        </div>
+
+        <p class="pfw-gallery-caption pfw-reveal"
+           data-fr="La créativité n'a pas de frontières."
+           data-en="Creativity knows no borders.">
+            La créativité n'a pas de frontières.
+        </p>
+    </section>
+
+    <section class="pfw-closing pfw-reveal">
+        <span class="pfw-eyebrow"
+              data-fr="L'héritage continue"
+              data-en="The legacy continues">
+            L'héritage continue
+        </span>
+
+        <h2 data-fr="Paris inspire le monde"
+            data-en="Paris inspires the world">
+            Paris inspire le monde
+        </h2>
+
+        <p data-fr="Entre patrimoine, artisanat et innovation, la mode française continue d'influencer les créateurs et de nourrir l'imagination des passionnés du monde entier."
+           data-en="Through heritage, craftsmanship and innovation, French fashion continues to influence designers and inspire fashion enthusiasts around the world.">
+            Entre patrimoine, artisanat et innovation, la mode française continue d'influencer les créateurs et de nourrir l'imagination des passionnés du monde entier.
+        </p>
+
+        <a class="pfw-button"
+           href="{{ url_for('home') }}"
+           data-fr="Retour à l'accueil"
+           data-en="Return to homepage">
+            Retour à l'accueil
+        </a>
+    </section>
+
+</main>
+
+<script>
+    // Smooth scroll-reveal animations
+    const pfwObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                pfwObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12
+    });
+
+    document.querySelectorAll('.pfw-reveal').forEach((element) => {
+        pfwObserver.observe(element);
+    });
+</script>
+
+</body>
+</html>
+

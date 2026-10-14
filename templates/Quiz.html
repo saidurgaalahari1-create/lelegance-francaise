@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>French Fashion History Quiz | L'Élégance Française</title>
+  <style>
+    :root{--espresso:#241710;--brown:#342218;--ivory:#f7f1e7;--muted:#d4c5b0;--gold:#c8a96b;--line:#624a35}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(135deg,rgba(36,23,16,.90),rgba(74,47,32,.72)),radial-gradient(ellipse at 10% 15%,rgba(200,169,107,.22),transparent 38%),radial-gradient(ellipse at 90% 75%,rgba(117,74,45,.32),transparent 40%);background-attachment:fixed;color:var(--ivory);font-family:Georgia,'Times New Roman',serif}
+    header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(22,13,9,.42);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(200,169,107,.25)}
+    .brand{color:var(--gold);text-decoration:none;letter-spacing:3px;font-size:13px;font-weight:bold}.header-actions{display:flex;align-items:center;gap:18px}
+    .back{color:var(--muted);text-decoration:none;font:13px Arial,sans-serif}.back:hover{color:var(--gold)}
+    .language-toggle{border:1px solid var(--gold);border-radius:999px;color:var(--gold);background:transparent;padding:10px 17px;cursor:pointer;font:bold 12px Arial,sans-serif;letter-spacing:1px;transition:all .2s}
+    .language-toggle:hover{background:var(--gold);color:var(--espresso)}
+    .hero{text-align:center;position:relative;overflow:hidden;padding:58px 20px 38px}.eyebrow{color:var(--gold);letter-spacing:3px;text-transform:uppercase;font:10px Arial,sans-serif;margin-bottom:15px}
+    h1{max-width:760px;margin:0 auto 16px;font-size:clamp(34px,5.5vw,58px);line-height:1.08;font-weight:normal;letter-spacing:-1.4px}.hero p{max-width:610px;margin:auto;color:var(--muted);font:14px/1.7 Arial,sans-serif}
+    .quiz-container{width:100%;max-width:860px;margin:0 auto 65px;padding:0 20px;flex:1}.quiz-card{position:relative;overflow:hidden;border-radius:18px;padding:clamp(24px,5vw,48px);background:linear-gradient(135deg,rgba(255,248,235,.13),rgba(255,248,235,.055));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,232,190,.28);box-shadow:0 28px 80px rgba(0,0,0,.24)}
+    .quiz-card:before{content:"L'ART DU STYLE";position:absolute;right:-10px;top:14px;color:rgba(247,241,231,.035);font-size:clamp(32px,7vw,76px);letter-spacing:5px;font-weight:bold;pointer-events:none}
+    .quiz-top{position:relative;display:flex;justify-content:space-between;gap:12px;margin-bottom:16px;color:var(--gold);font:10px Arial,sans-serif;letter-spacing:2px;align-items:center}
+    #score-display{border:1px solid #c8a96b73;padding:7px 11px;border-radius:999px;white-space:nowrap}.progress-track{height:5px;border-radius:99px;background:#f7f1e71c;margin-bottom:34px;overflow:hidden}.progress-bar{height:100%;width:0;background:var(--gold);border-radius:99px;box-shadow:0 0 14px #c8a96b47;transition:width .25s}
+    .category{display:inline-block;position:relative;padding:7px 10px;margin-bottom:17px;background:#c8a96b1a;border:1px solid #c8a96b47;border-radius:2px;color:var(--gold);font:10px Arial,sans-serif;letter-spacing:1.7px;text-transform:uppercase}
+    #question{position:relative;max-width:690px;font-size:clamp(22px,3.3vw,31px);line-height:1.35;font-weight:normal;letter-spacing:-.3px;margin-bottom:28px}.options{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .option{width:100%;min-height:72px;display:flex;align-items:center;text-align:left;gap:12px;padding:16px;border-radius:10px;background:rgba(18,11,7,.20);color:var(--ivory);border:1px solid rgba(255,232,190,.20);cursor:pointer;font:13px/1.5 Arial,sans-serif;transition:transform .2s,border-color .2s,background .2s}
+    .option:hover:not(:disabled),.option:focus-visible{transform:translateY(-2px);border-color:var(--gold);background:#c8a96b17}.option.selected{border-color:var(--gold);background:#c8a96b21}.option.correct{border-color:#83b78a;background:#2959356b}.option.wrong{border-color:#d18a7e;background:#702f276b}.option:disabled{cursor:default}
+    #feedback{position:relative;margin-top:20px;padding:14px 16px;background:rgba(12,8,5,.28);backdrop-filter:blur(10px);border:1px solid rgba(200,169,107,.20);border-left:3px solid var(--gold);border-radius:8px;color:var(--muted);font:14px/1.65 Arial,sans-serif}#feedback[hidden]{display:none}
+    .controls{position:relative;display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-top:24px}.main-button{border:1px solid var(--gold);border-radius:2px;background:var(--gold);color:#21150e;padding:14px 22px;min-height:46px;font:bold 12px Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:transform .2s,background .2s}.main-button:hover{background:#e0c58d;transform:translateY(-1px)}.main-button[hidden]{display:none}
+    #result{position:relative;text-align:center;display:none;padding:15px 0}#result h2{font-size:clamp(29px,4vw,42px);font-weight:normal;margin-bottom:18px}.score{color:var(--gold);font-size:clamp(54px,8vw,78px);line-height:1.1;margin-bottom:14px}#result p{color:var(--muted);font:15px/1.8 Arial,sans-serif;margin:0 auto 24px;max-width:580px}
+    footer{text-align:center;padding:24px 15px;color:#c7b49a;background:rgba(20,12,8,.38);backdrop-filter:blur(14px);border-top:1px solid rgba(200,169,107,.20);font:9px Arial,sans-serif;letter-spacing:2.5px}
+    @media(max-width:600px){header{padding:18px 5%}.hero{padding:42px 20px 30px}.quiz-card{padding:22px}.options{grid-template-columns:1fr}.option{min-height:58px}.quiz-card:before{top:8px;right:-7px;font-size:32px}.header-actions{gap:12px}.brand{letter-spacing:1.5px;font-size:11px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="{{ url_for('home') }}" class="brand">L'ÉLÉGANCE FRANÇAISE</a>
+    <div class="header-actions"><button class="language-toggle" id="language-toggle" type="button">FRANÇAIS</button><a href="{{ url_for('home') }}" class="back" id="back-link">← Back to Home</a></div>
+  </header>
+  <section class="hero"><div class="eyebrow" id="hero-eyebrow">L'histoire du style · The History of Style</div><h1 id="hero-title">The Art of French Fashion</h1><p id="hero-description">Explore the evolution of French fashion, iconic haute couture houses, and the origins of Paris Fashion Week. Answer all eight questions and discover your score.</p></section>
+  <main class="quiz-container">
+    <section class="quiz-card" id="quiz-card" aria-label="French fashion history quiz">
+      <div id="quiz"><div class="quiz-top"><span id="question-number">QUESTION 1 OF 8</span><span id="score-display">SCORE: 0</span></div><div class="progress-track"><div class="progress-bar" id="progress"></div></div><div class="category" id="category"></div><h2 id="question"></h2><div class="options" id="options"></div><p id="feedback" aria-live="polite" hidden></p><div class="controls"><button class="main-button" id="next-button" type="button" hidden>Next Question →</button></div></div>
+      <div id="result" aria-live="polite"><div class="eyebrow" id="result-eyebrow">Your result</div><h2 id="result-title">Quiz Completed</h2><div class="score" id="final-score"></div><p id="result-message"></p><button class="main-button" id="restart-button" type="button">Try Again ↻</button></div>
+    </section>
+  </main>
+  <footer id="footer-text">L'ÉLÉGANCE FRANÇAISE · THE ART OF FRENCH FASHION</footer>
+<script>
+const questions = [
+ {category:"Fashion Through History",question:"Which French king's court at Versailles helped establish France as a centre of luxury clothing and fashion in the 17th century?",options:["Louis XVI","Napoleon III","Louis XIV","Charles de Gaulle"],answer:2,explanation:"Louis XIV used court ceremony, luxury textiles, and dress to project royal power and encourage French luxury industries."},
+ {category:"The Birth of Haute Couture",question:"Who is widely regarded as a founder of modern haute couture after establishing a famous Paris fashion house in the 19th century?",options:["Charles Frederick Worth","Christian Dior","Yves Saint Laurent","Jean Paul Gaultier"],answer:0,explanation:"Charles Frederick Worth established a Paris couture house in the 19th century and helped shape the designer-led haute couture system."},
+ {category:"Iconic Fashion Houses",question:"Which fashion house introduced Christian Dior's celebrated 'New Look' collection in 1947?",options:["Chanel","Dior","Givenchy","Balmain"],answer:1,explanation:"Christian Dior's 1947 collection featured a defined waist and full skirt, creating a celebrated postwar fashion moment."},
+ {category:"Iconic Fashion Houses",question:"Which TWO statements about major French fashion houses are accurate?",options:["Chanel helped popularise relaxed elegance and jersey in womenswear.","Dior began in the 1890s as a sportswear-only label.","Louis Vuitton began with travel trunks and luggage.","Givenchy was founded before the French Revolution."],answer:[0,2],multi:true,explanation:"Chanel helped popularise practical elegance, while Louis Vuitton began with trunks and travel goods. Both statements should be selected."},
+ {category:"Understanding Haute Couture",question:"What does 'haute couture' most closely mean in the fashion industry?",options:["Mass-produced everyday clothing","High-end custom fashion made with exceptional craftsmanship","Clothing designed exclusively for sports","Traditional French pastry"],answer:1,explanation:"Haute couture refers to high-level dressmaking associated with bespoke creations, skilled craftsmanship, and specific French industry criteria."},
+ {category:"Paris as a Fashion Capital",question:"Why did Paris become internationally important in fashion?",options:["It banned luxury workshops.","It had no fashion designers until the 2000s.","Designers, skilled artisans, luxury houses, and influential clients gathered there.","It produced only sports clothing."],answer:2,explanation:"Paris developed a powerful fashion ecosystem by bringing together creative talent, skilled craftspeople, luxury businesses, and clients."},
+ {category:"Paris Fashion Week: Origins",question:"Which organisation launched the 1973 Versailles fashion event that helped shape the modern Paris runway calendar?",options:["The French fashion industry's couture federation","The French Ministry of Tourism","The Louvre Museum","The European Football Association"],answer:0,explanation:"The French fashion industry's couture federation organised the landmark 1973 event at Versailles."},
+ {category:"Paris Fashion Week Today",question:"Which statement about Paris Fashion Week is accurate?",options:["It happens only once in December.","It presents seasonal collections, including ready-to-wear and haute couture shows.","It is exclusively a trade fair for shoes.","It began as a film festival."],answer:1,explanation:"Paris hosts multiple fashion-week seasons during the year, including ready-to-wear and haute couture schedules."}
+];
+const frenchQuestions = [
+ {category:"La mode à travers l'histoire",question:"Quel roi de France a contribué à faire de la France un centre de mode et de vêtements de luxe au XVIIe siècle grâce à sa cour de Versailles ?",options:["Louis XVI","Napoléon III","Louis XIV","Charles de Gaulle"],explanation:"Louis XIV utilisait les cérémonies de cour, les textiles luxueux et les vêtements pour affirmer le pouvoir royal et encourager les industries françaises du luxe."},
+ {category:"La naissance de la haute couture",question:"Qui est considéré comme l'un des fondateurs de la haute couture moderne après avoir créé une célèbre maison de mode à Paris au XIXe siècle ?",options:["Charles Frederick Worth","Christian Dior","Yves Saint Laurent","Jean Paul Gaultier"],explanation:"Charles Frederick Worth a créé une maison de couture à Paris au XIXe siècle et a contribué à façonner le système de haute couture dirigé par les créateurs."},
+ {category:"Maisons de mode emblématiques",question:"Quelle maison de couture a présenté la célèbre collection « New Look » de Christian Dior en 1947 ?",options:["Chanel","Dior","Givenchy","Balmain"],explanation:"La collection de Christian Dior de 1947 mettait en valeur une taille marquée et une jupe ample, devenant un moment emblématique de la mode d'après-guerre."},
+ {category:"Maisons de mode emblématiques",question:"Quelles DEUX affirmations au sujet des grandes maisons de mode françaises sont exactes ?",options:["Chanel a contribué à populariser une élégance décontractée et le jersey dans les vêtements féminins.","Dior a commencé dans les années 1890 comme marque exclusivement consacrée aux vêtements de sport.","Louis Vuitton a commencé par fabriquer des malles et des bagages de voyage.","Givenchy a été fondée avant la Révolution française."],explanation:"Chanel a contribué à populariser une élégance pratique, tandis que Louis Vuitton a commencé comme fabricant de malles et d'articles de voyage."},
+ {category:"Comprendre la haute couture",question:"Que signifie le mieux l'expression « haute couture » dans l'industrie de la mode ?",options:["Des vêtements du quotidien produits en série","Une mode haut de gamme sur mesure, réalisée avec un savoir-faire exceptionnel","Des vêtements conçus exclusivement pour le sport","La pâtisserie française traditionnelle"],explanation:"La haute couture désigne des créations haut de gamme associées au sur-mesure, au savoir-faire artisanal et à des critères spécifiques de l'industrie française."},
+ {category:"Paris, capitale de la mode",question:"Pourquoi Paris est-elle devenue une ville d'importance internationale dans le domaine de la mode ?",options:["Elle a interdit les ateliers de luxe.","Elle n'a eu aucun créateur avant les années 2000.","Créateurs, artisans qualifiés, maisons de luxe et clients influents s'y sont réunis.","Elle ne produisait que des vêtements de sport."],explanation:"Paris a développé un puissant écosystème de la mode en réunissant des talents créatifs, des artisans qualifiés, des entreprises de luxe et des clients."},
+ {category:"Les origines de la Paris Fashion Week",question:"Quelle organisation a lancé l'événement de Versailles de 1973, qui a contribué à façonner le calendrier moderne des défilés parisiens ?",options:["La fédération française de l'industrie de la couture","Le ministère français du Tourisme","Le musée du Louvre","L'Union européenne de football"],explanation:"La fédération française de l'industrie de la mode a organisé l'événement marquant de 1973 à Versailles."},
+ {category:"La Paris Fashion Week aujourd'hui",question:"Quelle affirmation au sujet de la Paris Fashion Week est exacte ?",options:["Elle a lieu uniquement en décembre.","Elle présente des collections saisonnières, notamment le prêt-à-porter et la haute couture.","C'est exclusivement un salon professionnel de chaussures.","Elle a commencé comme un festival de cinéma."],explanation:"Paris accueille plusieurs saisons de la semaine de la mode au cours de l'année, notamment le prêt-à-porter et la haute couture."}
+];
+const text={en:{back:"← Back to Home",eyebrow:"L'histoire du style · The History of Style",title:"The Art of French Fashion",description:"Explore the evolution of French fashion, iconic haute couture houses, and the origins of Paris Fashion Week. Answer all eight questions and discover your score.",question:"QUESTION",of:"OF",score:"SCORE",next:"Next Question →",check:"Check Answer",selectTwo:"Select exactly two answers, then click Check Answer.",correct:"Well done! ",incorrect:"Not quite. ",resultEyebrow:"Your result",resultTitle:"Quiz Completed",restart:"Try Again ↻",start:"A lovely start. Explore the pages on French fashion history and try again!",excellent:"Excellent! You know your French fashion history very well.",veryGood:"Très bien! You have a good grasp of French fashion history.",effort:"Good effort! Review the fashion houses and Paris Fashion Week history, then try again.",aria:"French fashion history quiz",footer:"L'ÉLÉGANCE FRANÇAISE · THE ART OF FRENCH FASHION",toggle:"FRANÇAIS",selectNote:"Select both correct answers."},fr:{back:"← Retour à l'accueil",eyebrow:"L'histoire du style",title:"L'art de la mode française",description:"Explorez l'évolution de la mode française, les maisons emblématiques de haute couture et les origines de la Paris Fashion Week. Répondez aux huit questions pour découvrir votre score.",question:"QUESTION",of:"SUR",score:"SCORE",next:"Question suivante →",check:"Vérifier la réponse",selectTwo:"Sélectionnez exactement deux réponses, puis cliquez sur « Vérifier la réponse ».",correct:"Bravo ! ",incorrect:"Pas tout à fait. ",resultEyebrow:"Votre résultat",resultTitle:"Quiz terminé",restart:"Réessayer ↻",start:"Un bon début ! Explorez les pages consacrées à l'histoire de la mode française et réessayez.",excellent:"Excellent ! Vous connaissez très bien l'histoire de la mode française.",veryGood:"Très bien ! Vous avez une bonne connaissance de l'histoire de la mode française.",effort:"Bon effort ! Revoyez les maisons de mode et l'histoire de la Paris Fashion Week, puis réessayez.",aria:"Quiz sur l'histoire de la mode française",footer:"L'ÉLÉGANCE FRANÇAISE · L'ART DE LA MODE FRANÇAISE",toggle:"ENGLISH",selectNote:"Sélectionnez les deux bonnes réponses."}};
+let language="en",current=0,score=0,answered=false;
+const $=id=>document.getElementById(id);
+function renderQuestion(){
+ answered=false;
+ const q=questions[current],t=text[language],translated=language==="fr"?frenchQuestions[current]:q;
+ $('question-number').textContent=`${t.question} ${current+1} ${t.of} ${questions.length}`;
+ $('score-display').textContent=`${t.score}: ${score}`;
+ $('progress').style.width=`${(current/questions.length)*100}%`;
+ $('category').textContent=translated.category;
+ $('question').textContent=translated.question+(q.multi?(language==="fr"?" (Sélectionnez les deux bonnes réponses.)":" (Select both correct answers.)"):"");
+ $('options').innerHTML="";$('feedback').hidden=true;$('feedback').textContent="";$('next-button').hidden=true;
+ translated.options.forEach((option,index)=>{
+   const b=document.createElement('button');b.type='button';b.className='option';
+   const letter=document.createElement('span');letter.className='option-letter';letter.textContent=String.fromCharCode(65+index);
+   const label=document.createElement('span');label.textContent=option;
+   b.append(letter,label);b.addEventListener('click',()=>chooseAnswer(index,b));$('options').appendChild(b);
+ });
+}
+function chooseAnswer(index,button){
+ if(answered)return;
+ const q=questions[current],t=text[language];
+ if(q.multi){
+   if(button.classList.contains('selected')){
+     button.classList.remove('selected');
+     return;
+   }
+   const selectedButtons=[...$('options').querySelectorAll('.option.selected')];
+   if(selectedButtons.length>=2)return;
+   button.classList.add('selected');
+   const selected=[...$('options').querySelectorAll('.option')].map((b,i)=>b.classList.contains('selected')?i:-1).filter(i=>i>=0);
+   if(selected.length<2){
+     $('feedback').hidden=false;
+     $('feedback').textContent=language==='fr'?'Choisissez une deuxième réponse.':'Select one more answer.';
+     return;
+   }
+   verifySelection(selected,q,t);
+   return;
+ }
+ verifySelection([index],q,t);
+}
+function verifySelection(selected,q,t){
+ if(answered)return;
+ answered=true;
+ const expected=q.multi?q.answer:[q.answer];
+ const correct=selected.length===expected.length&&expected.every(i=>selected.includes(i));
+ if(correct)score++;
+ [...$('options').children].forEach((b,i)=>{
+   b.disabled=true;
+   if(expected.includes(i))b.classList.add('correct');
+   else if(selected.includes(i))b.classList.add('wrong');
+ });
+ const translatedExplanation=language==='fr'?frenchQuestions[current].explanation:q.explanation;
+ $('feedback').hidden=false;
+ $('feedback').textContent=(correct?t.correct:t.incorrect)+translatedExplanation;
+ $('score-display').textContent=`${t.score}: ${score}`;
+ $('progress').style.width=`${((current+1)/questions.length)*100}%`;
+ $('next-button').hidden=false;
+ $('next-button').textContent=current===questions.length-1?(language==='fr'?'Voir le résultat':'See Results'):t.next;
+}
+$('next-button').addEventListener('click',()=>{
+ if(!answered)return;
+ current++;
+ if(current<questions.length)renderQuestion();else showResult();
+});
+function showResult(){ $('quiz').style.display='none';$('result').style.display='block';$('progress').style.width='100%';$('final-score').textContent=`${score} / ${questions.length}`;const t=text[language];$('result-message').textContent=score>=7?t.excellent:score>=5?t.veryGood:score>=3?t.effort:t.start;}
+function applyLanguage(){const t=text[language];document.documentElement.lang=language;$('language-toggle').textContent=t.toggle;$('back-link').textContent=t.back;$('hero-eyebrow').textContent=t.eyebrow;$('hero-title').textContent=t.title;$('hero-description').textContent=t.description;$('quiz-card').setAttribute('aria-label',t.aria);$('next-button').textContent=t.next;$('result-eyebrow').textContent=t.resultEyebrow;$('result-title').textContent=t.resultTitle;$('restart-button').textContent=t.restart;$('footer-text').textContent=t.footer;if($('quiz').style.display==='none')showResult();else renderQuestion();}
+$('language-toggle').addEventListener('click',()=>{language=language==='en'?'fr':'en';applyLanguage()});$('restart-button').addEventListener('click',()=>{current=0;score=0;$('quiz').style.display='block';$('result').style.display='none';renderQuestion()});
+applyLanguage();
+</script>
+</body>
+</html>

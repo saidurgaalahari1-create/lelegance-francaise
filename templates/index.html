@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<meta name="theme-color" content="#211913">
+<meta name="description"
+      content="Découvrez l'élégance intemporelle de la mode française, des maisons de couture et de la Fashion Week de Paris.">
+
+<title>L'Élégance Française — The Art of French Fashion</title>
+
+<!-- Elegant editorial typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<!-- Main stylesheet -->
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+```
+
+</head>
+
+<body>
+
+```
+<!-- Reading progress -->
+<div class="reading-progress" id="readingProgress"></div>
+
+<!-- Navigation -->
+<header class="site-header" id="siteHeader">
+
+    <a href="#home" class="brand" aria-label="L'Élégance Française home">
+        <span class="brand-symbol">L<span>É</span>F</span>
+        <span class="brand-name">L'ÉLÉGANCE<br>FRANÇAISE</span>
+    </a>
+
+    <button class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open navigation"
+            aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav class="main-nav" id="mainNav">
+
+        <a href="#home" class="nav-link"
+           data-fr="Accueil" data-en="Home">
+            Accueil
+        </a>
+
+        <a href="#heritage" class="nav-link"
+           data-fr="Héritage" data-en="Heritage">
+            Héritage
+        </a>
+
+        <a href="{{ url_for('fashion_houses') }}" class="nav-link"
+           data-fr="Les Maisons" data-en="Fashion Houses">
+            Les Maisons
+        </a>
+
+        <a href="{{ url_for('paris_fashion_week') }}" class="nav-link"
+           data-fr="Paris Fashion Week" data-en="Paris Fashion Week">
+            Paris Fashion Week
+        </a>
+        <a href="{{ url_for('test_french') }}" class="nav-link"
+   data-fr="Quiz" data-en="Quiz">
+    Quiz
+</a>
+
+        <button class="language-toggle" id="languageToggle"
+                type="button" aria-label="Switch to English">
+            <span class="language-dot"></span>
+            <span id="languageLabel">EN</span>
+            <i class="fa-solid fa-globe"></i>
+        </button>
+
+    </nav>
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+
+        <div class="hero-image"
+             role="img"
+             aria-label="Elegant Parisian fashion editorial"></div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-side-note">
+            <span>PARIS</span>
+            <span class="side-line"></span>
+            <span>48°51' N</span>
+        </div>
+
+
+        <!-- Main hero content -->
+        <div class="hero-content">
+
+            <p class="eyebrow hero-eyebrow"
+               data-fr="L'ART DE S'HABILLER À LA FRANÇAISE"
+               data-en="THE ART OF FRENCH DRESSING">
+                L'ART DE S'HABILLER À LA FRANÇAISE
+            </p>
+
+            <h1 class="hero-title">
+                <span data-fr="L'élégance" data-en="The art of">
+                    L'élégance
+                </span>
+
+                <span class="title-italic"
+                      data-fr="est éternelle."
+                      data-en="being timeless.">
+                    est éternelle.
+                </span>
+            </h1>
+
+            <p class="hero-description"
+               data-fr="Un voyage au cœur de l'univers fascinant de la mode française, où l'héritage rencontre l'avant-garde."
+               data-en="A journey into the fascinating world of French fashion, where heritage meets the avant-garde.">
+                Un voyage au cœur de l'univers fascinant de la mode française,
+                où l'héritage rencontre l'avant-garde.
+            </p>
+
+            <a href="#heritage" class="hero-cta">
+                <span data-fr="DÉCOUVRIR L'HISTOIRE"
+                      data-en="DISCOVER THE STORY">
+                    DÉCOUVRIR L'HISTOIRE
+                </span>
+
+                <span class="cta-arrow">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </span>
+            </a>
+
+        </div>
+
+
+        <!-- Transparent team panel -->
+        <aside class="hero-team-panel"
+               aria-label="Project team">
+
+            <span class="hero-team-label">LE PROJET</span>
+
+            <h3>Notre Équipe</h3>
+
+            <div class="hero-team-member">
+                <span>GANESH KUMAR ALAHARI</span>
+                <small>RA2611026011062</small>
+            </div>
+
+            <div class="hero-team-member">
+                <span>SHAIK AADIL</span>
+                <small>RA2611026011077</small>
+            </div>
+
+            <div class="hero-team-member">
+                <span>KORADA OMKAR</span>
+                <small>RA2611026011084</small>
+            </div>
+
+            <div class="hero-team-member">
+                <span>C SUSHANTH</span>
+                <small>RA2611026011064</small>
+            </div>
+
+            <div class="hero-team-member">
+                <span>GRANDHI KALYANA CHAKRAVARTHI</span>
+                <small>RA2611026011125</small>
+            </div>
+
+        </aside>
+
+
+        <!-- Hero bottom details -->
+        <div class="hero-bottom">
+
+            <span data-fr="UN HÉRITAGE. UNE ATTITUDE. UN ART."
+                  data-en="A HERITAGE. AN ATTITUDE. AN ART.">
+                UN HÉRITAGE. UNE ATTITUDE. UN ART.
+            </span>
+
+            <span class="hero-edition">
+                ÉDITION Nº 001 — PARIS
+            </span>
+
+        </div>
+
+        <div class="hero-index">01 <span>/</span> 04</div>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+    <section class="intro section-padding reveal">
+
+        <div class="intro-label">
+            <span class="section-number">01</span>
+
+            <span data-fr="L'ESPRIT FRANÇAIS"
+                  data-en="THE FRENCH SPIRIT">
+                L'ESPRIT FRANÇAIS
+            </span>
+        </div>
+
+        <div class="intro-main">
+
+            <p class="intro-kicker"
+               data-fr="PLUS QU'UNE MODE, UNE CULTURE."
+               data-en="MORE THAN FASHION, A CULTURE.">
+                PLUS QU'UNE MODE, UNE CULTURE.
+            </p>
+
+            <h2 data-fr="Le style n'est pas une question de tendance. C'est une question de vision."
+                data-en="Style is not a matter of trends. It is a matter of vision.">
+                Le style n'est pas une question de tendance.
+                <em>C'est une question de vision.</em>
+            </h2>
+
+            <div class="intro-bottom">
+
+                <p data-fr="Depuis des siècles, la France façonne l'univers de la mode avec une créativité audacieuse, un savoir-faire exceptionnel et une élégance qui traverse les générations."
+                   data-en="For centuries, France has shaped the world of fashion through bold creativity, exceptional craftsmanship and an elegance that transcends generations.">
+                    Depuis des siècles, la France façonne l'univers de la mode
+                    avec une créativité audacieuse, un savoir-faire exceptionnel
+                    et une élégance qui traverse les générations.
+                </p>
+
+                <a href="{{ url_for('history') }}" class="text-link">
+                    <span data-fr="EXPLORER L'HÉRITAGE"
+                          data-en="EXPLORE THE HERITAGE">
+                        EXPLORER L'HÉRITAGE
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="intro-watermark">PARIS</div>
+
+    </section>
+
+
+    <!-- FEATURED EDITORIAL -->
+    <section class="editorial-section section-padding" id="heritage">
+
+        <div class="section-heading reveal">
+
+            <div>
+                <span class="section-kicker"
+                      data-fr="LES CHAPITRES D'UNE LÉGENDE"
+                      data-en="CHAPTERS OF A LEGEND">
+                    LES CHAPITRES D'UNE LÉGENDE
+                </span>
+
+                <h2 data-fr="L'univers de la mode française"
+                    data-en="The world of French fashion">
+                    L'univers de la mode française
+                </h2>
+            </div>
+
+            <span class="heading-side-note">
+                CULTURE · CRÉATION · COUTURE
+            </span>
+
+        </div>
+
+
+        <div class="editorial-grid">
+
+            <!-- History -->
+            <article class="editorial-card card-large reveal">
+
+                <a href="{{ url_for('history') }}"
+                   class="card-image-link"
+                   aria-label="Explore French fashion history">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1200&q=85"
+                        alt="High-fashion editorial portrait"
+                        loading="lazy">
+
+                    <span class="card-image-number">01</span>
+
+                    <span class="card-image-arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </span>
+
+                </a>
+
+                <div class="card-meta">
+                    <span data-fr="À TRAVERS LES SIÈCLES"
+                          data-en="THROUGH THE CENTURIES">
+                        À TRAVERS LES SIÈCLES
+                    </span>
+
+                    <span>01 / 03</span>
+                </div>
+
+                <h3 data-fr="Une histoire d'élégance"
+                    data-en="A history of elegance">
+                    Une histoire d'élégance
+                </h3>
+
+                <p data-fr="Des cours royales aux podiums contemporains, découvrez les moments qui ont transformé la mode française."
+                   data-en="From royal courts to contemporary runways, discover the moments that transformed French fashion.">
+                    Des cours royales aux podiums contemporains,
+                    découvrez les moments qui ont transformé la mode française.
+                </p>
+
+                <a href="{{ url_for('history') }}" class="card-link">
+                    <span data-fr="LIRE LE RÉCIT"
+                          data-en="READ THE STORY">
+                        LIRE LE RÉCIT
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </article>
+
+
+            <!-- Fashion houses -->
+            <article class="editorial-card reveal">
+
+                <a href="{{ url_for('fashion_houses') }}"
+                   class="card-image-link"
+                   aria-label="Discover French fashion houses">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=85"
+                        alt="Contemporary fashion editorial"
+                        loading="lazy">
+
+                    <span class="card-image-number">02</span>
+
+                    <span class="card-image-arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </span>
+
+                </a>
+
+                <div class="card-meta">
+                    <span data-fr="LES MAISONS LÉGENDAIRES"
+                          data-en="LEGENDARY FASHION HOUSES">
+                        LES MAISONS LÉGENDAIRES
+                    </span>
+
+                    <span>02 / 03</span>
+                </div>
+
+                <h3 data-fr="Les maîtres de la couture"
+                    data-en="Masters of couture">
+                    Les maîtres de la couture
+                </h3>
+
+                <p data-fr="Entrez dans l'univers des maisons qui ont redéfini le luxe et l'identité du style français."
+                   data-en="Enter the world of the houses that redefined luxury and the identity of French style.">
+                    Entrez dans l'univers des maisons qui ont redéfini
+                    le luxe et l'identité du style français.
+                </p>
+
+                <a href="{{ url_for('fashion_houses') }}" class="card-link">
+                    <span data-fr="DÉCOUVRIR LES MAISONS"
+                          data-en="DISCOVER THE HOUSES">
+                        DÉCOUVRIR LES MAISONS
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </article>
+
+
+            <!-- Paris Fashion Week -->
+            <article class="editorial-card reveal">
+
+                <a href="{{ url_for('paris_fashion_week') }}"
+                   class="card-image-link"
+                   aria-label="Discover Paris Fashion Week">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=85"
+                        alt="Fashion runway-inspired editorial"
+                        loading="lazy">
+
+                    <span class="card-image-number">03</span>
+
+                    <span class="card-image-arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </span>
+
+                </a>
+
+                <div class="card-meta">
+                    <span data-fr="LA SCÈNE INTERNATIONALE"
+                          data-en="THE INTERNATIONAL STAGE">
+                        LA SCÈNE INTERNATIONALE
+                    </span>
+
+                    <span>03 / 03</span>
+                </div>
+
+                <h3 data-fr="Paris sous les projecteurs"
+                    data-en="Paris in the spotlight">
+                    Paris sous les projecteurs
+                </h3>
+
+                <p data-fr="Découvrez l'énergie créative, les défilés iconiques et les nouvelles visions de la Fashion Week."
+                   data-en="Discover the creative energy, iconic runway shows and new visions of Fashion Week.">
+                    Découvrez l'énergie créative, les défilés iconiques
+                    et les nouvelles visions de la Fashion Week.
+                </p>
+
+                <a href="{{ url_for('paris_fashion_week') }}" class="card-link">
+                    <span data-fr="ENTRER EN SCÈNE"
+                          data-en="STEP INTO THE SHOW">
+                        ENTRER EN SCÈNE
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </article>
+
+        </div>
+    </section>
+
+
+    <!-- FULL-WIDTH STATEMENT -->
+    <section class="statement-section">
+
+        <div class="statement-image"></div>
+        <div class="statement-overlay"></div>
+
+        <div class="statement-content reveal">
+
+            <span class="section-kicker"
+                  data-fr="L'ART DE LA COUTURE"
+                  data-en="THE ART OF COUTURE">
+                L'ART DE LA COUTURE
+            </span>
+
+            <h2>
+                <span data-fr="Créer avec audace."
+                      data-en="Create boldly.">
+                    Créer avec audace.
+                </span>
+
+                <em data-fr="Vivre avec élégance."
+                    data-en="Live with elegance.">
+                    Vivre avec élégance.
+                </em>
+            </h2>
+
+            <span class="statement-star">✳</span>
+
+        </div>
+    </section>
+
+
+    <!-- PARIS FEATURE -->
+    <section class="paris-feature section-padding" id="paris">
+
+        <div class="paris-image-wrap reveal">
+
+            <img
+                src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1200&q=85"
+                alt="Parisian architecture and streets"
+                loading="lazy">
+
+            <div class="image-caption">
+                <span>PARIS, FRANCE</span>
+                <span>LA VILLE DE LA MODE</span>
+            </div>
+
+            <span class="paris-image-decoration">P.</span>
+
+        </div>
+
+
+        <div class="paris-copy reveal">
+
+            <span class="section-number">02</span>
+
+            <span class="section-kicker"
+                  data-fr="LÀ OÙ TOUT SE RENCONTRE"
+                  data-en="WHERE EVERYTHING COMES TOGETHER">
+                LÀ OÙ TOUT SE RENCONTRE
+            </span>
+
+            <h2 data-fr="Paris n'est pas simplement une ville. C'est une idée."
+                data-en="Paris is not simply a city. It is an idea.">
+                Paris n'est pas simplement une ville.
+                <em>C'est une idée.</em>
+            </h2>
+
+            <p data-fr="Capitale de la création et de la haute couture, Paris continue d'inspirer les designers, les artistes et les amoureux du style du monde entier."
+               data-en="A capital of creativity and haute couture, Paris continues to inspire designers, artists and style lovers around the world.">
+                Capitale de la création et de la haute couture,
+                Paris continue d'inspirer les designers, les artistes
+                et les amoureux du style du monde entier.
+            </p>
+
+            <a href="{{ url_for('paris_fashion_week') }}" class="outline-button">
+                <span data-fr="DÉCOUVRIR LA FASHION WEEK"
+                      data-en="DISCOVER FASHION WEEK">
+                    DÉCOUVRIR LA FASHION WEEK
+                </span>
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+
+        </div>
+    </section>
+
+
+    <!-- CLOSING QUOTE -->
+    <section class="quote-section">
+
+        <span class="quote-mark">“</span>
+
+        <blockquote class="reveal"
+            data-fr="La mode passe, le style est éternel."
+            data-en="Fashion passes, style is eternal.">
+            La mode passe, le style est éternel.
+        </blockquote>
+
+        <span class="quote-rule"></span>
+
+        <p data-fr="L'ESPRIT DE L'ÉLÉGANCE FRANÇAISE"
+           data-en="THE SPIRIT OF FRENCH ELEGANCE">
+            L'ESPRIT DE L'ÉLÉGANCE FRANÇAISE
+        </p>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+        <a href="#home" class="footer-brand">
+            L'ÉLÉGANCE<br>
+            <em>FRANÇAISE</em>
+        </a>
+
+        <p data-fr="Une célébration de l'histoire, de la créativité et de l'élégance intemporelle de la mode française."
+           data-en="A celebration of the history, creativity and timeless elegance of French fashion.">
+            Une célébration de l'histoire, de la créativité
+            et de l'élégance intemporelle de la mode française.
+        </p>
+
+        <a href="#home" class="back-to-top">
+            <span data-fr="RETOUR EN HAUT"
+                  data-en="BACK TO TOP">
+                RETOUR EN HAUT
+            </span>
+
+            <i class="fa-solid fa-arrow-up"></i>
+        </a>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>© 2026 L'ÉLÉGANCE FRANÇAISE</span>
+
+        <span data-fr="CONÇU AVEC PASSION À PARIS"
+              data-en="DESIGNED WITH PASSION IN PARIS">
+            CONÇU AVEC PASSION À PARIS
+        </span>
+
+        <a href="#home">↑</a>
+
+    </div>
+
+</footer>
+
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+```
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>L'Histoire de la Mode | L'Élégance Française</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .history-hero {
+            min-height: 78vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 9%;
+            color: #fffaf2;
+            background:
+                linear-gradient(90deg, rgba(38, 24, 19, .86), rgba(38, 24, 19, .18)),
+                url("https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=2000&q=85")
+                center 35% / cover;
+        }
+
+        .history-hero-content {
+            max-width: 760px;
+        }
+
+        .history-eyebrow {
+            font-size: .75rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #e3c69a;
+        }
+
+        .history-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.6rem, 8vw, 7rem);
+            font-weight: 400;
+            line-height: .95;
+            margin: 25px 0;
+        }
+
+        .history-hero p {
+            max-width: 550px;
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        .history-intro {
+            max-width: 900px;
+            margin: auto;
+            padding: 110px 24px 80px;
+            text-align: center;
+        }
+
+        .history-intro h2,
+        .history-period h2,
+        .history-ending h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        .history-intro p {
+            line-height: 2;
+            max-width: 720px;
+            margin: 25px auto 0;
+        }
+
+        .history-timeline {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 30px 30px 100px;
+            position: relative;
+        }
+
+        .history-timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 100px;
+            width: 1px;
+            background: #c5a572;
+            opacity: .7;
+        }
+
+        .history-period {
+            width: 50%;
+            padding: 30px 65px;
+            position: relative;
+        }
+
+        .history-period:nth-child(odd) {
+            margin-right: auto;
+            text-align: right;
+        }
+
+        .history-period:nth-child(even) {
+            margin-left: 50%;
+        }
+
+        .history-period::before {
+            content: "";
+            position: absolute;
+            top: 48px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #b38a53;
+            border: 4px solid #f8f3eb;
+            box-shadow: 0 0 0 1px #b38a53;
+        }
+
+        .history-period:nth-child(odd)::before {
+            right: -7px;
+        }
+
+        .history-period:nth-child(even)::before {
+            left: -7px;
+        }
+
+        .history-period img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            margin: 20px 0;
+            display: block;
+            transition: transform .7s ease;
+        }
+
+        .history-period:hover img {
+            transform: scale(1.025);
+        }
+
+        .history-date {
+            color: #a17a45;
+            letter-spacing: .2em;
+            font-size: .78rem;
+            font-weight: 600;
+        }
+
+        .history-period h2 {
+            margin: 10px 0;
+        }
+
+        .history-period p {
+            line-height: 1.9;
+            font-size: .94rem;
+        }
+
+        .history-period .history-caption {
+            font-size: .75rem;
+            opacity: .7;
+            margin-top: -10px;
+        }
+
+        .history-fact {
+            padding: 85px 10%;
+            background: #38271f;
+            color: #f8f0e4;
+            text-align: center;
+        }
+
+        .history-fact blockquote {
+            max-width: 850px;
+            margin: 20px auto;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            line-height: 1.25;
+        }
+
+        .history-ending {
+            text-align: center;
+            padding: 100px 24px;
+        }
+
+        .history-ending p {
+            max-width: 700px;
+            margin: 20px auto 30px;
+            line-height: 1.9;
+        }
+
+        .history-button {
+            display: inline-block;
+            border: 1px solid #ad8957;
+            padding: 14px 28px;
+            color: inherit;
+            text-decoration: none;
+            letter-spacing: .12em;
+            font-size: .75rem;
+            text-transform: uppercase;
+            transition: background .3s, color .3s;
+        }
+
+        .history-button:hover {
+            background: #ad8957;
+            color: white;
+        }
+
+        .history-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .history-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 760px) {
+            .history-hero {
+                min-height: 68vh;
+                padding: 90px 7%;
+            }
+
+            .history-intro {
+                padding-top: 75px;
+            }
+
+            .history-timeline {
+                padding: 10px 20px 60px 35px;
+            }
+
+            .history-timeline::before {
+                left: 12px;
+                bottom: 60px;
+            }
+
+            .history-period,
+            .history-period:nth-child(odd),
+            .history-period:nth-child(even) {
+                width: 100%;
+                margin: 0;
+                padding: 25px 0 35px 20px;
+                text-align: left;
+            }
+
+            .history-period:nth-child(odd)::before,
+            .history-period:nth-child(even)::before {
+                left: -29px;
+                right: auto;
+                top: 42px;
+            }
+
+            .history-period img {
+                height: 260px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .history-reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .history-period img {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="history-hero">
+        <div class="history-hero-content history-reveal">
+            <span class="history-eyebrow"
+                  data-fr="Un héritage d'élégance"
+                  data-en="A heritage of elegance">
+                Un héritage d'élégance
+            </span>
+
+            <h1 data-fr="L'Histoire<br>de la Mode"
+                data-en="The History<br>of Fashion">
+                L'Histoire<br>de la Mode
+            </h1>
+
+            <p data-fr="Des cours royales aux podiums contemporains, découvrez comment la France a façonné l'histoire de la mode mondiale."
+               data-en="From royal courts to contemporary runways, discover how France helped shape the history of global fashion.">
+                Des cours royales aux podiums contemporains, découvrez comment la France a façonné l'histoire de la mode mondiale.
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <section class="history-intro history-reveal">
+            <span class="history-eyebrow"
+                  data-fr="Un voyage à travers le temps"
+                  data-en="A journey through time">
+                Un voyage à travers le temps
+            </span>
+
+            <h2 data-fr="La mode française, une histoire vivante"
+                data-en="French fashion, a living history">
+                La mode française, une histoire vivante
+            </h2>
+
+            <p data-fr="La mode française est bien plus qu'une question de vêtements. Elle reflète les changements de la société, les mouvements artistiques et l'évolution des idées. Au fil des siècles, Paris est devenue un centre majeur de création, d'innovation et de savoir-faire."
+               data-en="French fashion is about much more than clothing. It reflects social change, artistic movements and evolving ideas. Over the centuries, Paris has become a major centre of creativity, innovation and craftsmanship.">
+                La mode française est bien plus qu'une question de vêtements. Elle reflète les changements de la société, les mouvements artistiques et l'évolution des idées. Au fil des siècles, Paris est devenue un centre majeur de création, d'innovation et de savoir-faire.
+            </p>
+        </section>
+
+        <section class="history-timeline">
+
+            <article class="history-period history-reveal">
+                <span class="history-date">XVIIe SIÈCLE</span>
+
+                <h2 data-fr="L'élégance royale"
+                    data-en="Royal elegance">
+                    L'élégance royale
+                </h2>
+
+                <img src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=1000&q=80"
+                     alt="Portrait artistique évoquant l'élégance historique">
+
+                <p data-fr="Sous le règne de Louis XIV, la cour de Versailles devient un centre de prestige et de raffinement. Les vêtements somptueux, les tissus luxueux et les accessoires participent à la représentation du pouvoir royal. La France renforce ainsi son influence dans les arts de vivre européens."
+                   data-en="Under Louis XIV, the court of Versailles became a centre of prestige and refinement. Opulent clothing, luxurious fabrics and accessories helped express royal power. France strengthened its influence on European court culture.">
+                    Sous le règne de Louis XIV, la cour de Versailles devient un centre de prestige et de raffinement. Les vêtements somptueux, les tissus luxueux et les accessoires participent à la représentation du pouvoir royal. La France renforce ainsi son influence dans les arts de vivre européens.
+                </p>
+
+                <p class="history-caption"
+                   data-fr="Le vêtement comme symbole de pouvoir."
+                   data-en="Clothing as a symbol of power.">
+                    Le vêtement comme symbole de pouvoir.
+                </p>
+            </article>
+
+            <article class="history-period history-reveal">
+                <span class="history-date">XVIIIe SIÈCLE</span>
+
+                <h2 data-fr="L'art de la cour"
+                    data-en="The art of court fashion">
+                    L'art de la cour
+                </h2>
+
+                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1000&q=80"
+                     alt="Peinture classique dans un musée">
+
+                <p data-fr="Au XVIIIe siècle, les robes à paniers, les broderies et les soieries illustrent le goût de l'aristocratie pour le luxe. Marie-Antoinette devient une figure emblématique de la mode de cour. Les styles vestimentaires expriment le rang social, les goûts personnels et les tendances de l'époque."
+                   data-en="In the eighteenth century, wide-skirted gowns, embroidery and silk reflected the aristocracy's taste for luxury. Marie Antoinette became an iconic figure of court fashion. Clothing expressed social rank, personal taste and the trends of the time.">
+                    Au XVIIIe siècle, les robes à paniers, les broderies et les soieries illustrent le goût de l'aristocratie pour le luxe. Marie-Antoinette devient une figure emblématique de la mode de cour. Les styles vestimentaires expriment le rang social, les goûts personnels et les tendances de l'époque.
+                </p>
+            </article>
+
+            <article class="history-period history-reveal">
+                <span class="history-date">XIXe SIÈCLE</span>
+
+                <h2 data-fr="La naissance de la haute couture"
+                    data-en="The birth of haute couture">
+                    La naissance de la haute couture
+                </h2>
+
+                <img src="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?auto=format&fit=crop&w=1000&q=85"
+     alt="Création de mode et haute couture">
+                <p data-fr="Au XIXe siècle, le créateur Charles Frederick Worth contribue à transformer Paris en capitale de la haute couture. Les maisons de couture développent des créations sur mesure, valorisent le savoir-faire artisanal et présentent leurs collections à une clientèle internationale."
+                   data-en="In the nineteenth century, designer Charles Frederick Worth helped establish Paris as a capital of haute couture. Couture houses developed made-to-measure creations, celebrated craftsmanship and presented collections to international clients.">
+                    Au XIXe siècle, le créateur Charles Frederick Worth contribue à transformer Paris en capitale de la haute couture. Les maisons de couture développent des créations sur mesure, valorisent le savoir-faire artisanal et présentent leurs collections à une clientèle internationale.
+                </p>
+            </article>
+
+            <article class="history-period history-reveal">
+                <span class="history-date">1947</span>
+
+                <h2 data-fr="Le New Look de Dior"
+                    data-en="Dior's New Look">
+                    Le New Look de Dior
+                </h2>
+
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=1000&q=80"
+                     alt="Silhouette élégante inspirée de la couture">
+
+                <p data-fr="En 1947, Christian Dior présente une collection qui marque profondément la mode d'après-guerre. Ses silhouettes aux tailles marquées et aux jupes amples mettent en valeur une élégance nouvelle. Le New Look contribue à redonner à Paris une place centrale dans la haute couture internationale."
+                   data-en="In 1947, Christian Dior presented a collection that profoundly influenced post-war fashion. Its defined waists and full skirts introduced a distinctive vision of elegance. The New Look helped restore Paris's central role in international haute couture.">
+                    En 1947, Christian Dior présente une collection qui marque profondément la mode d'après-guerre. Ses silhouettes aux tailles marquées et aux jupes amples mettent en valeur une élégance nouvelle. Le New Look contribue à redonner à Paris une place centrale dans la haute couture internationale.
+                </p>
+            </article>
+
+            <article class="history-period history-reveal">
+                <span class="history-date">ANNÉES 1960–1970</span>
+
+                <h2 data-fr="La révolution moderne"
+                    data-en="The modern revolution">
+                    La révolution moderne
+                </h2>
+
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=80"
+                     alt="Mode contemporaine et expression personnelle">
+
+                <p data-fr="Les années 1960 et 1970 voient apparaître de nouvelles libertés dans la manière de s'habiller. Yves Saint Laurent contribue à faire évoluer la garde-robe féminine, notamment avec le smoking pour femmes présenté en 1966. La mode devient un moyen d'expression individuelle et culturelle."
+                   data-en="The 1960s and 1970s brought new freedoms in clothing. Yves Saint Laurent helped transform women's wardrobes, notably with his women's tuxedo introduced in 1966. Fashion increasingly became a form of individual and cultural expression.">
+                    Les années 1960 et 1970 voient apparaître de nouvelles libertés dans la manière de s'habiller. Yves Saint Laurent contribue à faire évoluer la garde-robe féminine, notamment avec le smoking pour femmes présenté en 1966. La mode devient un moyen d'expression individuelle et culturelle.
+                </p>
+            </article>
+
+            <article class="history-period history-reveal">
+                <span class="history-date"
+                      data-fr="AUJOURD'HUI"
+                      data-en="TODAY">
+                    AUJOURD'HUI
+                </span>
+
+                <h2 data-fr="Tradition et innovation"
+                    data-en="Tradition and innovation">
+                    Tradition et innovation
+                </h2>
+
+                <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80"
+                     alt="Défilé de mode contemporain">
+
+                <p data-fr="Aujourd'hui, la mode française associe héritage artisanal, recherche créative et nouvelles technologies. Les créateurs explorent également la durabilité, les matières innovantes et la diversité des styles. Paris continue d'accueillir des événements qui réunissent créateurs, maisons de couture et passionnés du monde entier."
+                   data-en="Today, French fashion combines traditional craftsmanship, creative experimentation and new technologies. Designers also explore sustainability, innovative materials and diverse styles. Paris continues to host events bringing together designers, couture houses and fashion enthusiasts from around the world.">
+                    Aujourd'hui, la mode française associe héritage artisanal, recherche créative et nouvelles technologies. Les créateurs explorent également la durabilité, les matières innovantes et la diversité des styles. Paris continue d'accueillir des événements qui réunissent créateurs, maisons de couture et passionnés du monde entier.
+                </p>
+            </article>
+
+        </section>
+
+        <section class="history-fact history-reveal">
+            <span class="history-eyebrow"
+                  data-fr="L'esprit de la mode française"
+                  data-en="The spirit of French fashion">
+                L'esprit de la mode française
+            </span>
+
+            <blockquote data-fr="« La mode évolue, mais le véritable style traverse le temps. »"
+                        data-en="“Fashion evolves, but true style stands the test of time.”">
+                « La mode évolue, mais le véritable style traverse le temps. »
+            </blockquote>
+        </section>
+
+        <section class="history-ending history-reveal">
+            <span class="history-eyebrow"
+                  data-fr="La suite du voyage"
+                  data-en="Continue the journey">
+                La suite du voyage
+            </span>
+
+            <h2 data-fr="Découvrez les grandes maisons"
+                data-en="Discover the great fashion houses">
+                Découvrez les grandes maisons
+            </h2>
+
+            <p data-fr="De Chanel à Dior, explorez les maisons qui ont transformé cet héritage historique en une expression durable du luxe et de la créativité."
+               data-en="From Chanel to Dior, explore the fashion houses that transformed this heritage into an enduring expression of luxury and creativity.">
+                De Chanel à Dior, explorez les maisons qui ont transformé cet héritage historique en une expression durable du luxe et de la créativité.
+            </p>
+
+            <a class="history-button"
+               href="{{ url_for('fashion_houses') }}"
+               data-fr="Explorer les maisons"
+               data-en="Explore the fashion houses">
+                Explorer les maisons
+            </a>
+        </section>
+    </main>
+
+    <script>
+        // Scroll reveal animation for this page
+        const historyObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    historyObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12
+        });
+
+        document.querySelectorAll('.history-reveal').forEach((element) => {
+            historyObserver.observe(element);
+        });
+
+        // Support the language toggle from the existing shared script.
+        // data-fr and data-en are preserved on all translated elements.
+    </script>
+
+</body>
+</html>
+```
